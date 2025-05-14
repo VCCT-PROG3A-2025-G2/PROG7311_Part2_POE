@@ -10,8 +10,9 @@
     @if (User.IsInRole("Farmer"))
     {
         <div class="mb-4">
-            <a asp-action="AddProduct" class="btn btn-navbar-green">Add New Product</a>
-          
+            <a asp-action="AddProduct" class="btn btn-navbar-green">
+                Add New Product
+            </a>
         </div>
     }
 
@@ -20,35 +21,33 @@
             @if (User.IsInRole("Employee"))
             {
                 <form asp-action="FilterProducts" method="post" class="mb-4">
-                    <div class="row">
+                    <div class="row g-3">
                         <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="startDate">Start Date</label>
-                                <input type="date" class="form-control" name="startDate" id="startDate" />
-                            </div>
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" name="startDate" id="startDate" />
                         </div>
                         <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="endDate">End Date</label>
-                                <input type="date" class="form-control" name="endDate" id="endDate" />
-                            </div>
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" class="form-control" name="endDate" id="endDate" />
                         </div>
                         <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="productCategory">Category</label>
-                                <select class="form-control" name="productCategory" id="productCategory">
-                                    <option value="">All Categories</option>
-                                    <option value="Food">Food</option>
-                                    <option value="Wine">Wine</option>
-                                    <option value="Animals">Animals</option>
-                                    <option value="Equipment">Equipment</option>
-                                </select>
-                            </div>
+                            <label for="productCategory" class="form-label">Category</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="productCategory"
+                                   id="productCategory"
+                                   placeholder="e.g. Food" />
                         </div>
                         <div class="col-md-3">
-                            <div class="form-group mt-4">
-                                <button type="submit" class="btn btn-navbar-green">Filter</button>
-                            </div>
+                            <label for="farmerEmail" class="form-label">Farmer Email</label>
+                            <input type="email"
+                                   class="form-control"
+                                   name="farmerEmail"
+                                   id="farmerEmail"
+                                   placeholder="e.g. farmer@example.com" />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-navbar-green">Filter</button>
                         </div>
                     </div>
                 </form>
@@ -77,7 +76,11 @@
                                 <td>@product.Category</td>
                                 <td>@product.Price.ToString("F2")</td>
                                 <td>@product.Description</td>
-                                <td>@(product.ProductionDate.HasValue ? product.ProductionDate.Value.ToString("yyyy-MM-dd") : "")</td>
+                                <td>
+                                    @(product.ProductionDate.HasValue
+                                        ? product.ProductionDate.Value.ToString("yyyy-MM-dd")
+                                        : "")
+                                </td>
                                 @if (User.IsInRole("Employee"))
                                 {
                                     <td>@product.User?.Email</td>

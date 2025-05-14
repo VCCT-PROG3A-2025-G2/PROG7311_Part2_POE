@@ -47,15 +47,21 @@ Both user types can Log Out of the application.
 
 ##Restore NuGet packages
 
-cd /path/to/AgriEnergyConnect
+cd /path/to/PROG_Part2_POE
 dotnet restore
 
 ##Running the Application
 
+From Visual Studio:
+
+Build Solution
+Click on green 'https' button
+
+
 From the command line:
 
-cd /path/to/PROG7311_ST10257937_Part2_POE
-dotnet run --project PROG7311_ST10257937_Part2_POE.Web
+dotnet build
+dotnet run 
 
 -The application will start on https://localhost:5001 (HTTPS) and http://localhost:5000 (HTTP).
 -Open your browser and navigate to the URL shown in the console.
