@@ -1,98 +1,108 @@
-# Agri-Energy Connect Platform
+Agri-Energy Connect Platform
 
-## Overview
-The Agri-Energy Connect Platform is an innovative platform designed to connect sustainable agricultural practices with green energy solutions in South Africa. It serves as a bridge between farmers, energy industry experts, and stakeholders to facilitate knowledge sharing, product discovery, and project funding in the agricultural and energy sectors.
+#Overview
 
-## Key Features
+Agri-Energy Connect is a web application built with ASP.NET Core and SQLite. It allows two types of users—Farmers and Employees—to perform distinct actions:
 
-### 1. Sustainable Farming Hub
-- Interactive forums for knowledge sharing
-- Resource library for sustainable farming practices
-- Discussion topics on:
-  - Solar energy implementation
-  - Biogas systems
-  - Wind energy solutions
-  - Water conservation
-  - Crop rotation
-  - Soil health
-  - Pest management
+##Farmers can:
 
-### 2. Green Energy Marketplace
-- Comprehensive product listings for renewable energy solutions
-- Advanced filtering and search capabilities
-- Product reviews and ratings
-- Vendor profiles and contact information
-- Technical specifications and energy metrics
+-Register with Name, Surname, Email, Role (Farmer), Password, and Confirm Password.
+-Add Products via an "Add Products" page.
+-View Products on a page listing all products they have inserted.
 
-### 3. Collaboration and Funding Portal
-- Grant application system
-- Project submission and tracking
-- Funding opportunity matching
-- Real-time collaboration tools
-- Document management system
+##Employees can:
 
-## Technical Requirements
+-Register with Name, Surname, Email, Role (Employee), Password, and Confirm Password.
+-Add Farmers via an "Add Farmer" page (new farmers are created with the default password Default123!).
+-View Products on a page where they can filter products by date range and category.
 
-### Prerequisites
-- .NET 8.0 SDK
-- SQLite database
-- Visual Studio 2022 or Visual Studio Code
-- Node.js and npm (for frontend development)
+Both user types can Log Out of the application.
 
-### Installation
-1. Clone the repository
-2. Install .NET 8.0 SDK
-3. Restore NuGet packages:
-   ```bash
-   dotnet restore
-   ```
-4. Update the connection string in `appsettings.json`
-5. Run database migrations:
-   ```bash
-   dotnet ef database update
-   ```
-6. Start the application:
-   ```bash
-   dotnet run
-   ```
+#Prerequisites
 
-## Database Schema
-The platform utilizes a relational database with the following key entities:
+-.NET 8 SDK
+-DB Browser for SQLite
+-A modern web browser (Chrome, Edge, Firefox, Safari)
 
-### Core Entities
-- `ApplicationUser`: Base user entity
-- `Farmer`: Farmer profile information
-- `Product`: Renewable energy products
-- `ForumPost`: Discussion forum posts
-- `GrantApplication`: Grant funding applications
+##Password Requirements
 
-### Relationships
-- A Farmer can have multiple Products
-- A Product belongs to one Farmer
-- A Farmer can create multiple Forum Posts
-- A Farmer can submit multiple Grant Applications
+-When registering, passwords must meet the following security criteria:
 
-## Security Features
-- Role-based access control (RBAC)
-- OAuth 2.0 authentication
-- Data encryption at rest
-- Secure file uploads
-- Input validation and sanitization
-- Cross-site scripting (XSS) protection
+-At least 8 characters in length
+-At least one uppercase letter
+-At least one number
+-At least one symbol (e.g. !@#$%^&*)
 
-## Performance Optimization
-- Caching implementation
-- Database indexing
-- Async operations
-- Resource optimization
-- Load balancing support
+##Installation & Setup
 
-## Contributing
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+-Download the source code
+-Locate the zipped project file (e.g., AgriEnergyConnect.zip).
+-Download it to your local machine.
+-Extract the zip archive
+-Right-click the .zip file and select Extract All... (Windows) or double-click on macOS.
+-Choose a destination folder (e.g., C:\Desktop\PROG7311_ST10267937_Part2_POE).
+-Open the project in your IDE
+-Launch Visual Studio or VS Code.
+-Visual Studio: Select Open a project or solution, navigate to the extracted folder, and open PROG_Part2_POE.sln.
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+##Restore NuGet packages
+
+cd /path/to/AgriEnergyConnect
+dotnet restore
+
+##Running the Application
+
+From the command line:
+
+cd /path/to/PROG7311_ST10257937_Part2_POE
+dotnet run --project PROG7311_ST10257937_Part2_POE.Web
+
+-The application will start on https://localhost:5001 (HTTPS) and http://localhost:5000 (HTTP).
+-Open your browser and navigate to the URL shown in the console.
+-Or, press F5 (Debug) or Ctrl+F5 (Run without Debug) in Visual Studio.
+
+##Database (SQLite)
+
+-The app uses SQLite for data storage. The database file (app.db) is located in the Data folder of the project.
+
+-Open DB Browser for SQLite
+-File > Open Database
+-Navigate to Data/app.db in your project folder.
+-You can browse tables, run SQL queries, and inspect the data.
+
+##Features
+
+Registration & Authentication
+
+-All users must register with Name, Surname, Email, Role, Password, and Confirm Password.
+-Passwords must meet the security criteria outlined above.
+
+##Farmer Role
+
+-Add Products: Enter product name, description, price, category, and optionally upload an image.
+-View Products: See a list of all products you have added, with options to edit or delete.
+
+##Employee Role
+
+-Add Farmer: Create a new farmer user; the new account uses the default password Default123!.
+-View Products: Browse all products across farmers; filter by date range and product category.
+
+##Logout
+
+-Click Logout to securely end your session.
+
+##Troubleshooting
+
+-Database file missing: Ensure you have run the EF Core migrations or have the correct app.db in your Data folder.
+
+##GitHub Repository
+
+-View the full source code on GitHub: https://github.com/SamiMoosa/PROG7311_Part2_POE
+
+##License
+
+-This project is licensed under the MIT License. See LICENSE for details.
+
+##Acknowledgements
+
+This project was developed with the assistance of AI-powered conversational insights. ChatGPT 04-mini-high was used to brainstorm ideas, refine wording, and solve layout and design challenges. AI suggestions were used judiciously to enhance efficiency without replacing human decision-making.
