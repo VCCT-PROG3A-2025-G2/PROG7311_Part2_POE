@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+
+  
+
+    /* taller, flex-centered banner */
+    .welcome-banner {
+        background: url('/images/Home.jpg') center center/cover no-repeat;
+        color: #fff;
+        min-width: 1000px;
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        border-radius: 0 0 30px 30px;
+    }
+
+        .welcome-banner h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-banner p.lead {
+            font-size: 1.25rem;
+        }
+
+    /* feature sections */
+    .feature-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 3rem;
+        gap: 2rem;
+    }
+
+        .feature-section.reverse {
+            flex-direction: row-reverse;
+        }
+
+    .feature-img {
+        max-width: 220px;
+        width: 100%;
+        border-radius: 18px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    .feature-text {
+        flex: 1;
+        font-size: 1.25rem;
+        color: #333;
+        background: #f8fff3;
+        padding: 2rem;
+        border-radius: 18px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+</style>
+
+<!-- full-width banner -->
+<div class="banner-wrapper container-fluid p-0">
+    <div class="welcome-banner text-center">
+        <h1>Welcome to Agri-Energy Connect!</h1>
+        <p class="lead">Connecting Sustainable Agriculture with Green Energy Solutions.</p>
+    </div>
+</div>
+
+<!-- main page content -->
+<div class="container">
+    <div class="feature-section">
+        <img src="/images/Energy.jpg" alt="Energy" class="feature-img" />
+        <div class="feature-text">
+            <h2>Renewable Energy</h2>
+            <p>
+                Partnering exclusively with farmers powered by renewable energy, we foster sustainable practices
+                that benefit the planet and ensure premium-quality produce every season.
+            </p>
+        </div>
+    </div>
+
+    <div class="feature-section reverse">
+        <img src="/images/Harvest.jpg" alt="Harvest" class="feature-img" />
+        <div class="feature-text">
+            <h2>Fresh Harvests</h2>
+            <p>
+                Savor handpicked, farm-fresh produce harvested at peak ripeness—vibrant in flavor and nutrition,
+                delivered straight from the field to your table.
+            </p>
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <img src="/images/Cows.jpg" alt="Cows" class="feature-img" />
+        <div class="feature-text">
+            <h2>Farm Dairy Products</h2>
+            <p>
+                Connect with local dairy artisans committed to ethical, humane farming—enjoy rich, creamy dairy
+                products crafted with care and delivered fresh from barn to bottle.
+            </p>
+        </div>
+    </div>
+
+    <div class="feature-section reverse">
+        <img src="/images/wheat.jpg" alt="Wheat" class="feature-img" />
+        <div class="feature-text">
+            <h2>Golden Harvests</h2>
+            <p>
+                Explore our golden grains and wholesome cereals, nurtured through eco-conscious methods for
+                bountiful yields that nourish both you and the environment.
+            </p>
+        </div>
+    </div>
+</div>

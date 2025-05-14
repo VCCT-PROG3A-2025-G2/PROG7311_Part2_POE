@@ -1,0 +1,38 @@
+@model PROG6212_New_POE.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Add Farmer";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Add New Farmer</h1>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="AddFarmer" method="post">
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="alert mt-2" style="background-color: #dbe5dd; border: 1px solid #b0b7b3; color: #000000;">
+                    Default password will be <strong>Default123!</strong>
+                </div>
+                <button type="submit" class="btn btn-navbar-green">Add Farmer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

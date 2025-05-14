@@ -1,0 +1,92 @@
+@model IEnumerable<PROG6212_New_POE.Models.Product>
+
+@{
+    ViewData["Title"] = "View Products";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Products</h1>
+
+    @if (User.IsInRole("Farmer"))
+    {
+        <div class="mb-4">
+            <a asp-action="AddProduct" class="btn btn-navbar-green">Add New Product</a>
+          
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            @if (User.IsInRole("Employee"))
+            {
+                <form asp-action="FilterProducts" method="post" class="mb-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" class="form-control" name="startDate" id="startDate" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="endDate">End Date</label>
+                                <input type="date" class="form-control" name="endDate" id="endDate" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="productCategory">Category</label>
+                                <select class="form-control" name="productCategory" id="productCategory">
+                                    <option value="">All Categories</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Wine">Wine</option>
+                                    <option value="Animals">Animals</option>
+                                    <option value="Equipment">Equipment</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-navbar-green">Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            }
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price (R)</th>
+                            <th>Description</th>
+                            <th>Production Date</th>
+                            @if (User.IsInRole("Employee"))
+                            {
+                                <th>Farmer Email</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model)
+                        {
+                            <tr>
+                                <td>@product.Name</td>
+                                <td>@product.Category</td>
+                                <td>@product.Price.ToString("F2")</td>
+                                <td>@product.Description</td>
+                                <td>@(product.ProductionDate.HasValue ? product.ProductionDate.Value.ToString("yyyy-MM-dd") : "")</td>
+                                @if (User.IsInRole("Employee"))
+                                {
+                                    <td>@product.User?.Email</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
