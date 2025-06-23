@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PROG6212_New_POE.Data;
 using PROG6212_New_POE.Models;
+using PROG6212_New_POE.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("http://localhost:5052", "https://localhost:7289");
@@ -65,6 +66,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddTransient<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, DummyEmailSender>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IFarmerService, FarmerService>();
 
 var app = builder.Build();
 

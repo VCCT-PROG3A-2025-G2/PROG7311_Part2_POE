@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using PROG6212_New_POE.Data;
 using PROG6212_New_POE.Models;
 using Microsoft.AspNetCore.Identity;
+using PROG6212_New_POE.Services;
 
 namespace PROG6212_New_POE.Controllers
 {
@@ -14,13 +15,19 @@ namespace PROG6212_New_POE.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IProductService _productService;
+        private readonly IFarmerService _farmerService;
 
         public HomeController(
             ApplicationDbContext context,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IProductService productService,
+            IFarmerService farmerService)
         {
             _context = context;
             _userManager = userManager;
+            _productService = productService;
+            _farmerService = farmerService;
         }
 
         public IActionResult Index() => View();
@@ -41,18 +48,7 @@ namespace PROG6212_New_POE.Controllers
             if (user == null)
                 return RedirectToAction("Login", "Account");
 
-            var product = new Product
-            {
-                Name = input.Name,
-                Category = input.Category,
-                Price = input.Price,
-                Description = input.Description,
-                ProductionDate = input.ProductionDate,
-                ApplicationUserId = user.Id
-            };
-
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            await _productService.AddProductAsync(input, user.Id);
 
             TempData["Success"] = "Product added successfully!";
             return RedirectToAction(nameof(ViewProducts));
@@ -67,19 +63,9 @@ namespace PROG6212_New_POE.Controllers
                 return RedirectToAction("Login", "Account");
 
             var roles = await _userManager.GetRolesAsync(user);
-            if (roles.Contains("Farmer"))
-            {
-                var farmerProducts = await _context.Products
-                    .Where(p => p.ApplicationUserId == user.Id)
-                    .ToListAsync();
-                return View(farmerProducts);
-            }
-
-            // Employee sees all by default
-            var allProducts = await _context.Products
-                .Include(p => p.User)
-                .ToListAsync();
-            return View(allProducts);
+            bool isFarmer = roles.Contains("Farmer");
+            var products = await _productService.GetProductsForUserAsync(user.Id, isFarmer);
+            return View(products);
         }
 
         [HttpPost]
@@ -90,41 +76,7 @@ namespace PROG6212_New_POE.Controllers
             string productCategory,
             string farmerEmail)
         {
-            var query = _context.Products
-                .Include(p => p.User)
-                .AsQueryable();
-
-            if (startDate.HasValue)
-                query = query.Where(p =>
-                    p.ProductionDate.HasValue &&
-                    p.ProductionDate.Value >= startDate.Value);
-
-            if (endDate.HasValue)
-                query = query.Where(p =>
-                    p.ProductionDate.HasValue &&
-                    p.ProductionDate.Value <= endDate.Value);
-
-            // case-insensitive category match
-            if (!string.IsNullOrWhiteSpace(productCategory))
-            {
-                var catFilter = productCategory
-                    .Trim()
-                    .ToLower();
-                query = query.Where(p =>
-                    p.Category.ToLower() == catFilter);
-            }
-
-            // case-insensitive email contains
-            if (!string.IsNullOrWhiteSpace(farmerEmail))
-            {
-                var emailFilter = farmerEmail
-                    .Trim()
-                    .ToLower();
-                query = query.Where(p =>
-                    p.User.Email.ToLower().Contains(emailFilter));
-            }
-
-            var filteredList = await query.ToListAsync();
+            var filteredList = await _productService.FilterProductsAsync(startDate, endDate, productCategory, farmerEmail);
             return View(nameof(ViewProducts), filteredList);
         }
 
@@ -139,25 +91,14 @@ namespace PROG6212_New_POE.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = new ApplicationUser
+            var result = await _farmerService.AddFarmerAsync(model);
+            if (result)
             {
-                UserName = model.Email,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName
-            };
-
-            var result = await _userManager.CreateAsync(user, "Default123!");
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, "Farmer");
                 TempData["Success"] = "Farmer added successfully!";
                 return RedirectToAction(nameof(ViewProducts));
             }
 
-            foreach (var error in result.Errors)
-                ModelState.AddModelError(string.Empty, error.Description);
-
+            ModelState.AddModelError(string.Empty, "Failed to add farmer.");
             return View(model);
         }
     }
