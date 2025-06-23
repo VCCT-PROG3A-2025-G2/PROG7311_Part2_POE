@@ -7,7 +7,7 @@ Email: Farmer@gmail.com
 Password: Default123!
 
 Employee Login details:
-Email: Clive@gmail.com
+Email: Employee@gmail.com
 Password: Default123!
 
 #Overview
