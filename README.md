@@ -1,5 +1,15 @@
 Agri-Energy Connect Platform
 
+#Log In details
+
+Farmer Login details:
+Email: Farmer@gmail.com
+Password: Default123!
+
+Employee Login details:
+Email: Clive@gmail.com
+Password: Default123!
+
 #Overview
 
 Agri-Energy Connect is a web application built with ASP.NET Core and SQLite. It allows two types of users—Farmers and Employees—to perform distinct actions:
